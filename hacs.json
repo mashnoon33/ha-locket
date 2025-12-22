@@ -1,0 +1,7 @@
+{
+  "name": "Locket",
+  "render_readme": true,
+  "domains": ["camera"],
+  "iot_class": "Cloud Polling"
+}
+
