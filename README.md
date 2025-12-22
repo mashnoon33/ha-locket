@@ -83,7 +83,7 @@ The camera entity includes the following attributes:
 
 ## Notes
 
-- The integration polls for new moments every 60 seconds by default
+- The integration polls for new moments every 10 minutes by default
 - Your credentials are stored securely in Home Assistant's configuration
 - This integration is not officially supported by Locket
 
