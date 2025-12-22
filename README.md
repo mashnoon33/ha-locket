@@ -8,6 +8,7 @@ A Home Assistant custom integration to display your Locket moments as a camera w
 - Automatic token refresh
 - Shows missed moments count and moment metadata
 - Login via Home Assistant configuration UI
+- Support for both email/password and phone OTP authentication
 
 ## Installation
 
