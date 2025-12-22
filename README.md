@@ -40,7 +40,9 @@ A Home Assistant custom integration to display your Locket moments as a camera w
 1. Go to Settings → Devices & Services
 2. Click "Add Integration"
 3. Search for "Locket"
-4. Enter your Locket email and password
+4. Choose your authentication method:
+   - **Email/Password**: Enter your Locket email and password
+   - **Phone OTP**: Enter your phone number (E.164 format: +1234567890), then enter the verification code sent to your phone
 5. The integration will authenticate and create the camera entity
 
 ## Usage

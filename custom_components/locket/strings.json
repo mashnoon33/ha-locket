@@ -3,20 +3,44 @@
     "step": {
       "user": {
         "title": "Locket Configuration",
-        "description": "Enter your Locket credentials",
+        "description": "Choose your authentication method",
+        "data": {
+          "auth_method": "Authentication Method"
+        }
+      },
+      "email": {
+        "title": "Email/Password Login",
+        "description": "Enter your Locket email and password",
         "data": {
           "email": "Email",
           "password": "Password"
+        }
+      },
+      "phone": {
+        "title": "Phone Number",
+        "description": "Enter your phone number in E.164 format (e.g., +1234567890)",
+        "data": {
+          "phone": "Phone Number"
+        }
+      },
+      "otp": {
+        "title": "OTP Verification",
+        "description": "Enter the verification code sent to {phone}",
+        "data": {
+          "otp_code": "Verification Code"
         }
       }
     },
     "error": {
       "cannot_connect": "Unable to connect to Locket API",
       "invalid_auth": "Invalid authentication credentials",
+      "invalid_phone": "Invalid phone number format. Use E.164 format (e.g., +1234567890)",
+      "invalid_otp": "Invalid verification code. Please try again.",
       "unknown": "Unexpected error occurred"
     },
     "abort": {
-      "already_configured": "Locket is already configured"
+      "already_configured": "Locket is already configured",
+      "phone_not_set": "Phone number not set"
     }
   }
 }

@@ -147,6 +147,49 @@ class LocketAPI:
             },
         )
 
+    async def request_phone_otp(self, phone_e164: str) -> dict[str, Any]:
+        """Request OTP code for phone authentication."""
+        return await self._fetch_locket(
+            "sendVerificationCode",
+            method="POST",
+            body={
+                "data": {
+                    "deviceModel": "iPhone12,1",
+                    "operation": "hybrid",
+                    "phone": phone_e164,
+                    "use_password_if_available": False,
+                }
+            },
+        )
+
+    async def verify_phone_otp(
+        self, phone_e164: str, code: str
+    ) -> dict[str, Any]:
+        """Verify OTP code and get custom token."""
+        return await self._fetch_locket(
+            "checkVerificationCode",
+            method="POST",
+            body={
+                "data": {
+                    "phone": phone_e164,
+                    "verification_code": code,
+                }
+            },
+        )
+
+    async def exchange_otp_token_for_id_token(
+        self, custom_token: str
+    ) -> dict[str, Any]:
+        """Exchange custom token for ID token."""
+        return await self._fetch_firebase(
+            f"{FIREBASE_BASE_URL}/verifyCustomToken",
+            method="POST",
+            body={
+                "returnSecureToken": True,
+                "token": custom_token,
+            },
+        )
+
     async def fetch_latest_moment(self, token: str | None = None) -> dict[str, Any]:
         """Fetch the latest moment."""
         return await self._fetch_locket(
