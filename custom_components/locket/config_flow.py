@@ -19,6 +19,8 @@ from .const import (
     CONF_OTP_CODE,
     CONF_TOKEN,
     CONF_REFRESH_TOKEN,
+    CONF_UPDATE_INTERVAL,
+    DEFAULT_UPDATE_INTERVAL,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -152,6 +154,9 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     CONF_TOKEN: info[CONF_TOKEN],
                     CONF_REFRESH_TOKEN: info[CONF_REFRESH_TOKEN],
                 },
+                options={
+                    CONF_UPDATE_INTERVAL: DEFAULT_UPDATE_INTERVAL,
+                },
             )
 
         return self.async_show_form(
@@ -168,3 +173,37 @@ class CannotConnect(HomeAssistantError):
 
 class InvalidAuth(HomeAssistantError):
     """Error to indicate there is invalid auth."""
+
+
+class OptionsFlowHandler(config_entries.OptionsFlow):
+    """Handle options flow for Locket."""
+
+    async def async_step_init(
+        self, user_input: dict[str, Any] | None = None
+    ) -> FlowResult:
+        """Manage the options."""
+        if user_input is not None:
+            return self.async_create_entry(title="", data=user_input)
+
+        current_interval = self.config_entry.options.get(
+            CONF_UPDATE_INTERVAL, DEFAULT_UPDATE_INTERVAL
+        )
+
+        return self.async_show_form(
+            step_id="init",
+            data_schema=vol.Schema(
+                {
+                    vol.Required(
+                        CONF_UPDATE_INTERVAL,
+                        default=current_interval,
+                    ): vol.All(
+                        vol.Coerce(int),
+                        vol.Range(min=10, max=86400),
+                    ),
+                }
+            ),
+            description_placeholders={
+                "min": "10",
+                "max": "86400",
+            },
+        )

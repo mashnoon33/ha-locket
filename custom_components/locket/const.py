@@ -11,6 +11,7 @@ CONF_PHONE = "phone"
 CONF_OTP_CODE = "otp_code"
 CONF_TOKEN = "token"
 CONF_REFRESH_TOKEN = "refresh_token"
+CONF_UPDATE_INTERVAL = "update_interval"
 
 DEFAULT_UPDATE_INTERVAL = 6000
 

@@ -108,7 +108,10 @@ class LocketAPI:
         auth_token = token or self._token
         if auth_token:
             headers["Authorization"] = f"Bearer {auth_token}"
+        else:
+            _LOGGER.warning("No authentication token available for Locket API request")
 
+        _LOGGER.debug("Making %s request to %s", method, url)
         try:
             async with session.request(
                 method, url, headers=headers, json=body
@@ -116,11 +119,19 @@ class LocketAPI:
                 if response.status != 200:
                     error_data = await response.json()
                     error_msg = error_data.get("message", f"Locket API error: {response.status}")
+                    _LOGGER.error(
+                        "Locket API request failed. Status: %d, Endpoint: %s, Error: %s",
+                        response.status,
+                        endpoint,
+                        error_msg
+                    )
                     raise LocketAPIError(error_msg, response.status)
 
                 result = await response.json()
+                _LOGGER.debug("Locket API request successful for endpoint: %s", endpoint)
                 return result.get("result", result)
         except aiohttp.ClientError as err:
+            _LOGGER.error("Network error during Locket API request to %s: %s", endpoint, err)
             raise LocketAPIError(f"Network error: {str(err)}") from err
 
     async def login(self, email: str, password: str) -> dict[str, Any]:
@@ -192,7 +203,8 @@ class LocketAPI:
 
     async def fetch_latest_moment(self, token: str | None = None) -> dict[str, Any]:
         """Fetch the latest moment."""
-        return await self._fetch_locket(
+        _LOGGER.debug("Fetching latest moment from Locket API")
+        result = await self._fetch_locket(
             "getLatestMomentV2",
             method="POST",
             body={
@@ -203,4 +215,6 @@ class LocketAPI:
             },
             token=token or self._token,
         )
+        _LOGGER.debug("Received moment data: %s", result)
+        return result
 

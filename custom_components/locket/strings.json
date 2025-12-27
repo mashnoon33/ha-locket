@@ -25,6 +25,17 @@
     "abort": {
       "already_configured": "Locket is already configured",
       "phone_not_set": "Phone number not set"
+    },
+    "options": {
+      "step": {
+        "init": {
+          "title": "Locket Options",
+          "description": "Configure the update interval for fetching new moments",
+          "data": {
+            "update_interval": "Update Interval (seconds)"
+          }
+        }
+      }
     }
   }
 }
