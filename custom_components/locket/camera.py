@@ -50,7 +50,7 @@ class LocketCamera(CoordinatorEntity, Camera):
         caption = moment_data.get("caption", "")
         
         if caption:
-            return f"Locket Moment: {caption}"
+            return caption
         return "Locket Moment"
 
     async def async_added_to_hass(self) -> None:
